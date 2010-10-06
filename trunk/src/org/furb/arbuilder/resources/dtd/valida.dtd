@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!ELEMENT projetoAR (modeloGrafico|configuracao)*>
+<!ELEMENT configuracao (usuario|senha|database|porta|host)*>
+<!ELEMENT host (#PCDATA)>
+<!ELEMENT porta (#PCDATA)>
+<!ELEMENT database (#PCDATA)>
+<!ELEMENT senha (#PCDATA)>
+<!ELEMENT usuario (#PCDATA)>
+<!ELEMENT modeloGrafico (ligacao|operador|tabela)*>
+<!ELEMENT tabela (posicaoTabela|nomeTabela)*>
+<!ELEMENT nomeTabela (#PCDATA)>
+<!ELEMENT posicaoTabela (#PCDATA)>
+<!ELEMENT operador (parametro2Operador|posicaoOperador|parametro1Operador|nomeOperador)*>
+<!ELEMENT nomeOperador (#PCDATA)>
+<!ELEMENT parametro1Operador (#PCDATA)>
+<!ELEMENT posicaoOperador (#PCDATA)>
+<!ELEMENT parametro2Operador (#PCDATA)>
+<!ELEMENT ligacao (posicaoFilho|posicaoPai)*>
+<!ELEMENT posicaoPai (#PCDATA)>
+<!ELEMENT posicaoFilho (#PCDATA)>
