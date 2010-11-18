@@ -118,7 +118,8 @@ public class DAO {
     			{"@O#RDER BY@"	,	"ORDER BY"},
     			{" <> "," != "},
     			{" \\^ "," AND "},
-    			{" v "," OR "}
+    			{" v "," OR "},
+    			{"@D#ISTINCT@"  ,   "DISTINCT"}
     	};
     	
     	String query = expressaoAR;

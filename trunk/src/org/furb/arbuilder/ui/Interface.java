@@ -154,6 +154,7 @@ public class Interface extends javax.swing.JFrame {
         btDiferenca = new javax.swing.JButton();
         brJuncaoExterna = new javax.swing.JButton();
         btOrdenacao = new javax.swing.JButton();
+        btDistinct = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btAbrir = new javax.swing.JMenuItem();
@@ -389,6 +390,16 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        btDistinct.setBackground(new java.awt.Color(255, 255, 255));
+        btDistinct.setFont(new java.awt.Font("Tahoma", 1, 11));
+        btDistinct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_distinct.png"))); // NOI18N
+        btDistinct.setToolTipText("Operacao Ordenacao");
+        btDistinct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btDistinctMousePressed(evt);
+            }
+        });
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -423,7 +434,9 @@ public class Interface extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btOrdenacao, 0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btProdutoCartesiano, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btDistinct, 0, 0, Short.MAX_VALUE)
+                                .addComponent(btProdutoCartesiano, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btAgrupamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -459,7 +472,8 @@ public class Interface extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btDiferenca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
                         .addComponent(brJuncaoExterna, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE))
-                    .addComponent(btOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btDistinct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btCriarLigacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -614,6 +628,10 @@ public class Interface extends javax.swing.JFrame {
 		this.painelGrafico.setNovoOperador(6);
 	}//GEN-LAST:event_btOrdenacaoMousePressed
 	
+	private void btDistinctMousePressed(java.awt.event.MouseEvent evt) {
+		this.painelGrafico.setNovoOperador(8);
+    }
+	
 	private void btConfiguracaoBDMousePressed(java.awt.event.MouseEvent evt) {                                              
 	    new InterfaceConfiguracao().setVisible(true);
 	}                                    
@@ -750,7 +768,6 @@ public class Interface extends javax.swing.JFrame {
 	    } else {
 	    	
 		    try {
-		    	
 		    	if( sqlResultante.getText().trim().isEmpty() || sqlResultante.getText().contains("Erro, estrutura mal-formada neste operador!") ){
 		    		JOptionPane.showMessageDialog(this, "Nao e possivel executar esta expressao SQL!", "Erro!", JOptionPane.ERROR_MESSAGE);
 		    	} else {
@@ -819,6 +836,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JButton btCriarLigacao;
     private javax.swing.JButton btDesconectar;
     private javax.swing.JButton btDiferenca;
+    private javax.swing.JButton btDistinct;
     private javax.swing.JMenuItem btEquipe;
     private javax.swing.JButton btExecutarSQL;
     private javax.swing.JButton btOrdenacao;
