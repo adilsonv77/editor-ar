@@ -10,7 +10,8 @@ public enum Operadores {
 	DIFERENCA				("Diferenca"			, 5 , "/org/furb/arbuilder/resources/images/op_diferenca.png"			),
 	ORDENACAO				("Ordenacao"			, 6 , "/org/furb/arbuilder/resources/images/op_ordenacao.png"			),
 	JUNCAO_EX_ESQUERDA		("JuncaoExEsquerda"		, 7 , "/org/furb/arbuilder/resources/images/op_juncao.png"				),
-	DISTINCT				("Distinct"  			, 8 , "/org/furb/arbuilder/resources/images/op_distinct.png"			);
+	DISTINCT				("Distinct"  			, 8 , "/org/furb/arbuilder/resources/images/op_distinct.png"			), 
+	JUNCAO_NATURAL            ("JuncaoNatural"			, 9 , "/org/furb/arbuilder/resources/images/op_juncaoNatural.png"			);
 	
 	
 	private String operador;

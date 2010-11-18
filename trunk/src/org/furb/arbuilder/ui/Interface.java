@@ -155,6 +155,7 @@ public class Interface extends javax.swing.JFrame {
         brJuncaoExterna = new javax.swing.JButton();
         btOrdenacao = new javax.swing.JButton();
         btDistinct = new javax.swing.JButton();
+        btJuncaoNatural = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btAbrir = new javax.swing.JMenuItem();
@@ -400,6 +401,16 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         
+        btJuncaoNatural.setBackground(new java.awt.Color(255, 255, 255));
+        btJuncaoNatural.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btJuncaoNatural.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
+        btJuncaoNatural.setToolTipText("Operacao Juncao Natural");
+        btJuncaoNatural.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btJuncaoNaturalMousePressed(evt);
+            }
+        });
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -422,7 +433,7 @@ public class Interface extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(btDiferenca, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                                    .addComponent(btSelecao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                                    .addComponent(btSelecao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -436,9 +447,11 @@ public class Interface extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btDistinct, 0, 0, Short.MAX_VALUE)
-                                .addComponent(btProdutoCartesiano, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btProdutoCartesiano, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btAgrupamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btJuncaoNatural, 0, 0, Short.MAX_VALUE)
+                            .addComponent(btAgrupamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,29 +470,32 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btSelecao, 0, 0, Short.MAX_VALUE)
-                    .addComponent(btProjecao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(btUniao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(btProdutoCartesiano, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btProjecao, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btUniao, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btProdutoCartesiano, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(btAgrupamento, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btDiferenca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
-                        .addComponent(brJuncaoExterna, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE))
-                    .addComponent(btOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btDistinct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btCriarLigacao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btDiferenca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                                .addComponent(brJuncaoExterna, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE))
+                            .addComponent(btOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btDistinct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btCriarLigacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4))
+                    .addComponent(btJuncaoNatural, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomeOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -490,6 +506,8 @@ public class Interface extends javax.swing.JFrame {
                     .addComponent(parm2Operador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+
 
         jMenu1.setText("Arquivo");
 
@@ -632,6 +650,10 @@ public class Interface extends javax.swing.JFrame {
 		this.painelGrafico.setNovoOperador(8);
     }
 	
+	 private void btJuncaoNaturalMousePressed(java.awt.event.MouseEvent evt) {
+		 this.painelGrafico.setNovoOperador(9);
+	}
+	
 	private void btConfiguracaoBDMousePressed(java.awt.event.MouseEvent evt) {                                              
 	    new InterfaceConfiguracao().setVisible(true);
 	}                                    
@@ -661,7 +683,7 @@ public class Interface extends javax.swing.JFrame {
 	}//GEN-LAST:event_btCriarLigacaoActionPerformed
 	
 	private void btAbrirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAbrirMousePressed
-	   
+	  // FAZER!
 		if( arquivoAberto )
 		{
 	        int ret = verificaDesejaSalvar();
@@ -839,6 +861,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JButton btDistinct;
     private javax.swing.JMenuItem btEquipe;
     private javax.swing.JButton btExecutarSQL;
+    private javax.swing.JButton btJuncaoNatural;
     private javax.swing.JButton btOrdenacao;
     private javax.swing.JButton btProdutoCartesiano;
     private javax.swing.JButton btProjecao;
