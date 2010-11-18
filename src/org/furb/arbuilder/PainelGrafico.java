@@ -659,7 +659,12 @@ public class PainelGrafico {
 		case 8:
 			v = new Distinct(Operadores.DISTINCT.getOperador());
 			this.exigeParametro = false;
-		}
+			break;
+		case 9:
+		   v = new Distinct(Operadores.JUNCAO_NATURAL.getOperador());
+		   this.exigeParametro = false;
+		   break;
+	   }
 
 		this.operador = new GraficoOperador(v.toString(), v);
 	}
