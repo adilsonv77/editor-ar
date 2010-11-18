@@ -192,13 +192,10 @@ public class Digrafo {
     	String ret = null;
     	
     	try {
-    	
     		//Invoka o metodo da expressao
     		Method m = this.getClass().getMethod( "logic" + v.getNome() , Vertice.class , Vertice.class );
     		ret = String.valueOf( m.invoke( this , new Object[]{ v , parent } ) );
-    		
     	} catch ( NoSuchMethodException e ) {
-			
     		//Caso não existe um metodo, é uma tabela
             if( v instanceof Tabela ) 
             {
@@ -425,6 +422,8 @@ public class Digrafo {
         	}
         }
         
+        System.out.println(paramsLeft);
+        
         if( paramsLeft.contains("ORDER BY")) 
         {
             return paramsLeft.split("ORDER BY")[0].trim() + " ORDER BY" + paramsLeft.split("ORDER BY")[1] + ", " + params;
@@ -433,6 +432,21 @@ public class Digrafo {
     	String newQuery = paramsLeft + " ORDER BY " + params;	
     	return newQuery;
     }
+    
+    public final String logicDistinct( Vertice v , Vertice parent ) throws Exception 
+    {
+    	//Recupera o SQL resultante dos vertices adjacentes
+    	String paramsLeft =  montaAlgebraRelacional( getAdjacencias(v).get(0) , v );
+    	this.validaQuery(paramsLeft);
+
+    	    	
+    	AliasHelper.getInstance().setCurrentOperator( Operadores.DISTINCT.getOperador() );
+
+        
+    	return "SELECT DISTINCT " + paramsLeft.substring(9, paramsLeft.length());    
+    
+    }
+    
     
     /**
      * Método responsável pela contrução
