@@ -448,6 +448,12 @@ public class Digrafo {
     }
     
     
+    public final String logicJuncaoNatural( Vertice v , Vertice parent ) throws Exception
+    {
+    //TODO
+    	return null;
+    }
+    
     /**
      * Método responsável pela contrução
      * logica do operador de juncao externa a esquerda
