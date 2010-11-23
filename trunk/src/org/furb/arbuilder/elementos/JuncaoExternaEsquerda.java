@@ -34,6 +34,7 @@ public class JuncaoExternaEsquerda extends Operador {
 	public final String toString() 
     {
         if(this.parametro != null) {
+        	System.out.println(super.getNome() + " " + this.parametro);
             return super.getNome() + " " + this.parametro;
         }
         else {
