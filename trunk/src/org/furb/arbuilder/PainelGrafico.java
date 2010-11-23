@@ -661,8 +661,8 @@ public class PainelGrafico {
 			this.exigeParametro = false;
 			break;
 		case 9:
-		   v = new Distinct(Operadores.JUNCAO_NATURAL.getOperador());
-		   this.exigeParametro = false;
+		/* v = new Distinct(Operadores.JUNCAO_NATURAL.getOperador());
+		   this.exigeParametro = false;*/
 		   break;
 	   }
 
