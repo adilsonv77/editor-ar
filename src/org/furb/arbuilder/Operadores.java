@@ -2,22 +2,16 @@ package org.furb.arbuilder;
 
 public enum Operadores {
 //testando
-	SELECAO("Selecao", 0, "/org/furb/arbuilder/resources/images/op_selecao.png"), PROJECAO(
-			"Projecao", 1,
-			"/org/furb/arbuilder/resources/images/op_projecao.png"), UNIAO(
-			"Uniao", 2, "/org/furb/arbuilder/resources/images/op_uniao.png"), PRODUTO_CARTESIANO(
-			"ProdutoCartesiano", 3,
-			"/org/furb/arbuilder/resources/images/op_produto_cartesiano.png"), AGRUPAMENTO(
-			"Agrupamento", 4,
-			"/org/furb/arbuilder/resources/images/op_agrupamento.png"), DIFERENCA(
-			"Diferenca", 5,
-			"/org/furb/arbuilder/resources/images/op_diferenca.png"), ORDENACAO(
-			"Ordenacao", 6,
-			"/org/furb/arbuilder/resources/images/op_ordenacao.png"), JUNCAO_EX_ESQUERDA(
-			"JuncaoExEsquerda", 7,
-			"/org/furb/arbuilder/resources/images/op_juncao.png"), DISTINCT(
-			"Distinct", 8,
-			"/org/furb/arbuilder/resources/images/op_distinct.png");
+	SELECAO("Selecao", 0, "/org/furb/arbuilder/resources/images/op_selecao.png"), 
+	PROJECAO("Projecao", 1,"/org/furb/arbuilder/resources/images/op_projecao.png"), 
+	UNIAO("Uniao", 2, "/org/furb/arbuilder/resources/images/op_uniao.png"), 
+	PRODUTO_CARTESIANO("ProdutoCartesiano", 3,	"/org/furb/arbuilder/resources/images/op_produto_cartesiano.png"), 
+	AGRUPAMENTO("Agrupamento", 4,"/org/furb/arbuilder/resources/images/op_agrupamento.png"), 
+	DIFERENCA("Diferenca", 5,	"/org/furb/arbuilder/resources/images/op_diferenca.png"), 
+	ORDENACAO("Ordenacao", 6,	"/org/furb/arbuilder/resources/images/op_ordenacao.png"), 
+	JUNCAO_EX_ESQUERDA("JuncaoExEsquerda", 7,"/org/furb/arbuilder/resources/images/op_juncao.png"), 
+	DISTINCT("Distinct", 8,"/org/furb/arbuilder/resources/images/op_distinct.png"),
+	JUNCAO_NATURAL("JuncaoNatural", 9,"/org/furb/arbuilder/resources/images/op_juncaoNatural.png"),;
 
 	private String operador;
 	private int type;

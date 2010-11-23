@@ -665,7 +665,7 @@ public class Interface extends javax.swing.JFrame {
 	}
 
 	private void btJuncaoNaturalMousePressed(java.awt.event.MouseEvent evt) {
-		this.painelGrafico.setNovoOperador(8);
+		this.painelGrafico.setNovoOperador(9);
 	}
 
 	private void btConfiguracaoBDMousePressed(java.awt.event.MouseEvent evt) {

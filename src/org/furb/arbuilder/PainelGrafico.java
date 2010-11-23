@@ -1,21 +1,5 @@
 package org.furb.arbuilder;
 
-import org.furb.arbuilder.elementos.Agrupamento;
-import org.furb.arbuilder.elementos.Diferenca;
-import org.furb.arbuilder.elementos.Distinct;
-import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
-import org.furb.arbuilder.elementos.Operador;
-import org.furb.arbuilder.elementos.Ordenacao;
-import org.furb.arbuilder.elementos.ProdutoCartesiano;
-import org.furb.arbuilder.elementos.Projecao;
-import org.furb.arbuilder.elementos.Selecao;
-import org.furb.arbuilder.elementos.SelecaoProjecao;
-import org.furb.arbuilder.elementos.Uniao;
-import org.furb.arbuilder.elementos.UniaoProdutoCartesiano;
-import org.furb.arbuilder.elementos.Vertice;
-import org.furb.arbuilder.elementos.tabela.Tabela;
-import org.furb.arbuilder.ui.Interface;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -33,6 +17,23 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import org.furb.arbuilder.elementos.Agrupamento;
+import org.furb.arbuilder.elementos.Diferenca;
+import org.furb.arbuilder.elementos.Distinct;
+import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
+import org.furb.arbuilder.elementos.JuncaoNatural;
+import org.furb.arbuilder.elementos.Operador;
+import org.furb.arbuilder.elementos.Ordenacao;
+import org.furb.arbuilder.elementos.ProdutoCartesiano;
+import org.furb.arbuilder.elementos.Projecao;
+import org.furb.arbuilder.elementos.Selecao;
+import org.furb.arbuilder.elementos.SelecaoProjecao;
+import org.furb.arbuilder.elementos.Uniao;
+import org.furb.arbuilder.elementos.UniaoProdutoCartesiano;
+import org.furb.arbuilder.elementos.Vertice;
+import org.furb.arbuilder.elementos.tabela.Tabela;
+import org.furb.arbuilder.ui.Interface;
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultEdge;
@@ -191,7 +192,7 @@ public class PainelGrafico {
 		}
 
 		if (segundaCelula == null) { // Se nao existir ainda segunda celula cai
-										// fora
+			// fora
 			return;
 		}
 
@@ -239,6 +240,12 @@ public class PainelGrafico {
 			return;
 		}
 		if (primeiraCelula.getUserObject() instanceof JuncaoExternaEsquerda
+				&& this.controle.getEstruturaDigrafo().getAdjacencias(
+						(Vertice) primeiraCelula.getUserObject()).size() > 1) {
+			this.limparAtributo();
+			return;
+		}
+		if (primeiraCelula.getUserObject() instanceof JuncaoNatural
 				&& this.controle.getEstruturaDigrafo().getAdjacencias(
 						(Vertice) primeiraCelula.getUserObject()).size() > 1) {
 			this.limparAtributo();
@@ -352,6 +359,15 @@ public class PainelGrafico {
 		}
 
 		if (args != null
+				&& this.operador.getOperador().getClass() == JuncaoNatural.class) {
+			((JuncaoNatural) this.operador.getOperador()).setParametro(args);
+			((JuncaoNatural) this.operador.getOperador())
+					.setEntrada1(new Vertice(""));
+			((JuncaoNatural) this.operador.getOperador())
+					.setEntrada2(new Vertice(""));
+		}
+
+		if (args != null
 				&& (this.operador.getOperador().getClass() == Ordenacao.class)) {
 			((Ordenacao) this.operador.getOperador()).setParametro(args);
 			((Ordenacao) this.operador.getOperador())
@@ -439,6 +455,9 @@ public class PainelGrafico {
 		}
 		if (this.operador.getOperador() instanceof Distinct) {
 			v = new Distinct(this.operador.getOperador().getNome());
+		}
+		if (this.operador.getOperador() instanceof JuncaoNatural) {
+			v = new JuncaoNatural(this.operador.getOperador().getNome());
 		}
 
 		return v;
@@ -564,7 +583,15 @@ public class PainelGrafico {
 								((Agrupamento) celula).getColunasProjetadas(),
 								true);
 					} else if (celula instanceof Distinct) {
-						((Interface) this.parent).setEditarParametrosOperador(((Distinct) celula).getNome(),"","",true);
+						((Interface) this.parent).setEditarParametrosOperador(
+								((Distinct) celula).getNome(), "", "", true);
+					} else if (celula instanceof JuncaoNatural) {
+						((Interface) this.parent)
+								.setEditarParametrosOperador(
+										((JuncaoNatural) celula)
+												.getNome(),
+										((JuncaoNatural) celula)
+												.getParametro(), "", false);
 					} else {
 						((Interface) this.parent)
 								.setEditarParametrosTabela(((Operador) celula)
@@ -581,10 +608,16 @@ public class PainelGrafico {
 
 		try {
 			if (cell != null && cell.getUserObject() instanceof Vertice) {
-				((Interface) this.parent).setSQL(this.controle.getDAO().montarSQlDeAR(this.controle.getEstruturaDigrafo().montaAlgebraRelacional((Vertice) cell.getUserObject(),null)));
+				((Interface) this.parent).setSQL(this.controle.getDAO()
+						.montarSQlDeAR(
+								this.controle.getEstruturaDigrafo()
+										.montaAlgebraRelacional(
+												(Vertice) cell.getUserObject(),
+												null)));
 			}
 		} catch (Exception e) {
-			((Interface) this.parent).setSQL("Erro, estrutura mal-formada neste operador!");
+			((Interface) this.parent)
+					.setSQL("Erro, estrutura mal-formada neste operador!");
 		}
 
 		// Se o atributo for nulo ou nao tiver nada selecionado cai fora
@@ -599,8 +632,8 @@ public class PainelGrafico {
 						.getY());
 			} else if (this.ligacao != null) {
 				this.inserirLigacaoNoGrafico(evt.getX(), evt.getY(), -1, -1); // Senao
-																				// insere
-																				// GraficoOperador
+				// insere
+				// GraficoOperador
 			}
 		} else if (this.listaTabela.getSelectedValue() != null) {
 			// Insere componente no grafico
@@ -661,10 +694,10 @@ public class PainelGrafico {
 			this.exigeParametro = false;
 			break;
 		case 9:
-		/* v = new Distinct(Operadores.JUNCAO_NATURAL.getOperador());
-		   this.exigeParametro = false;*/
-		   break;
-	   }
+			v = new JuncaoNatural(Operadores.JUNCAO_NATURAL.getOperador());
+			this.exigeParametro = true;
+			break;
+		}
 
 		this.operador = new GraficoOperador(v.toString(), v);
 	}
@@ -711,6 +744,10 @@ public class PainelGrafico {
 			} else if (objeto instanceof Agrupamento) {
 				((Agrupamento) objeto).setColunasAgrupadoras(parm1Operador);
 				((Agrupamento) objeto).setColunasProjetadas(parm2Operador);
+			} else if (objeto instanceof JuncaoNatural) {
+				((JuncaoNatural) objeto).setParametro(parm1Operador);
+				celula.setUserObject(objeto);
+				// TODO: VERIFICAR
 			}
 
 			painelGrafico.refresh();

@@ -11,6 +11,14 @@ public class UniaoProdutoCartesiano extends Operador {
     private String entrada1;
     private String entrada2;
 
+    public String getEntrada1(){
+    	return this.entrada1;
+    }
+    
+    public String getEntrada2(){
+    	return this.entrada2;
+    }
+    
     public UniaoProdutoCartesiano(String nome) {
         super(nome);
     }
@@ -24,7 +32,7 @@ public class UniaoProdutoCartesiano extends Operador {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         if(this.entrada1 != null && this.entrada2 != null) {
             return "(" + entrada1 + ") " + super.getNome() + " (" + entrada2 + ")";
         }
