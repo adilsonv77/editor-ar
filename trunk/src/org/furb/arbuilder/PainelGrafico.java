@@ -360,11 +360,10 @@ public class PainelGrafico {
 
 		if (args != null
 				&& this.operador.getOperador().getClass() == JuncaoNatural.class) {
-			((JuncaoNatural) this.operador.getOperador()).setParametro(args);
 			((JuncaoNatural) this.operador.getOperador())
-					.setEntrada1(new Vertice(""));
+					.setParametro(args);
 			((JuncaoNatural) this.operador.getOperador())
-					.setEntrada2(new Vertice(""));
+					.setEntrada(new Vertice(""));
 		}
 
 		if (args != null
@@ -457,7 +456,7 @@ public class PainelGrafico {
 			v = new Distinct(this.operador.getOperador().getNome());
 		}
 		if (this.operador.getOperador() instanceof JuncaoNatural) {
-			v = new JuncaoNatural(this.operador.getOperador().getNome());
+			v = new JuncaoNatural(this.operador.getOperador().getNome(), args);
 		}
 
 		return v;
@@ -586,12 +585,10 @@ public class PainelGrafico {
 						((Interface) this.parent).setEditarParametrosOperador(
 								((Distinct) celula).getNome(), "", "", true);
 					} else if (celula instanceof JuncaoNatural) {
-						((Interface) this.parent)
-								.setEditarParametrosOperador(
-										((JuncaoNatural) celula)
-												.getNome(),
-										((JuncaoNatural) celula)
-												.getParametro(), "", false);
+						((Interface) this.parent).setEditarParametrosOperador(
+								((JuncaoNatural) celula).getNome(),
+								((JuncaoNatural) celula).getParametro(), "",
+								false);
 					} else {
 						((Interface) this.parent)
 								.setEditarParametrosTabela(((Operador) celula)
