@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 import org.furb.arbuilder.elementos.Agrupamento;
 import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
-import org.furb.arbuilder.elementos.JuncaoNatural;
+import org.furb.arbuilder.elementos.JuncaoTeta;
 import org.furb.arbuilder.elementos.Ordenacao;
 import org.furb.arbuilder.elementos.Projecao;
 import org.furb.arbuilder.elementos.Selecao;
@@ -482,7 +482,7 @@ public class Digrafo {
 	public final String logicJuncaoNatural(Vertice v, Vertice parent)
 			throws Exception {
 
-		JuncaoNatural jn = (JuncaoNatural) v;
+		JuncaoTeta jn = (JuncaoTeta) v;
 
 		// Recursivamente chama os operadores superiores, motando suas querys.
 		String parentLeft = montaAlgebraRelacional(getAdjacencias(v).get(0), v)

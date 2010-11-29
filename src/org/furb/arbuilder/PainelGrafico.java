@@ -22,7 +22,7 @@ import org.furb.arbuilder.elementos.Agrupamento;
 import org.furb.arbuilder.elementos.Diferenca;
 import org.furb.arbuilder.elementos.Distinct;
 import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
-import org.furb.arbuilder.elementos.JuncaoNatural;
+import org.furb.arbuilder.elementos.JuncaoTeta;
 import org.furb.arbuilder.elementos.Operador;
 import org.furb.arbuilder.elementos.Ordenacao;
 import org.furb.arbuilder.elementos.ProdutoCartesiano;
@@ -245,7 +245,7 @@ public class PainelGrafico {
 			this.limparAtributo();
 			return;
 		}
-		if (primeiraCelula.getUserObject() instanceof JuncaoNatural
+		if (primeiraCelula.getUserObject() instanceof JuncaoTeta
 				&& this.controle.getEstruturaDigrafo().getAdjacencias(
 						(Vertice) primeiraCelula.getUserObject()).size() > 1) {
 			this.limparAtributo();
@@ -359,10 +359,10 @@ public class PainelGrafico {
 		}
 
 		if (args != null
-				&& this.operador.getOperador().getClass() == JuncaoNatural.class) {
-			((JuncaoNatural) this.operador.getOperador())
+				&& this.operador.getOperador().getClass() == JuncaoTeta.class) {
+			((JuncaoTeta) this.operador.getOperador())
 					.setParametro(args);
-			((JuncaoNatural) this.operador.getOperador())
+			((JuncaoTeta) this.operador.getOperador())
 					.setEntrada(new Vertice(""));
 		}
 
@@ -455,8 +455,8 @@ public class PainelGrafico {
 		if (this.operador.getOperador() instanceof Distinct) {
 			v = new Distinct(this.operador.getOperador().getNome());
 		}
-		if (this.operador.getOperador() instanceof JuncaoNatural) {
-			v = new JuncaoNatural(this.operador.getOperador().getNome(), args);
+		if (this.operador.getOperador() instanceof JuncaoTeta) {
+			v = new JuncaoTeta(this.operador.getOperador().getNome(), args);
 		}
 
 		return v;
@@ -584,10 +584,10 @@ public class PainelGrafico {
 					} else if (celula instanceof Distinct) {
 						((Interface) this.parent).setEditarParametrosOperador(
 								((Distinct) celula).getNome(), "", "", true);
-					} else if (celula instanceof JuncaoNatural) {
+					} else if (celula instanceof JuncaoTeta) {
 						((Interface) this.parent).setEditarParametrosOperador(
-								((JuncaoNatural) celula).getNome(),
-								((JuncaoNatural) celula).getParametro(), "",
+								((JuncaoTeta) celula).getNome(),
+								((JuncaoTeta) celula).getParametro(), "",
 								false);
 					} else {
 						((Interface) this.parent)
@@ -691,7 +691,7 @@ public class PainelGrafico {
 			this.exigeParametro = false;
 			break;
 		case 9:
-			v = new JuncaoNatural(Operadores.JUNCAO_NATURAL.getOperador());
+			v = new JuncaoTeta(Operadores.JUNCAO_NATURAL.getOperador());
 			this.exigeParametro = true;
 			break;
 		}
@@ -741,8 +741,8 @@ public class PainelGrafico {
 			} else if (objeto instanceof Agrupamento) {
 				((Agrupamento) objeto).setColunasAgrupadoras(parm1Operador);
 				((Agrupamento) objeto).setColunasProjetadas(parm2Operador);
-			} else if (objeto instanceof JuncaoNatural) {
-				((JuncaoNatural) objeto).setParametro(parm1Operador);
+			} else if (objeto instanceof JuncaoTeta) {
+				((JuncaoTeta) objeto).setParametro(parm1Operador);
 				celula.setUserObject(objeto);
 				// TODO: VERIFICAR
 			}
