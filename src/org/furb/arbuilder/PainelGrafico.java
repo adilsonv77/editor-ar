@@ -691,7 +691,7 @@ public class PainelGrafico {
 			this.exigeParametro = false;
 			break;
 		case 9:
-			v = new JuncaoTeta(Operadores.JUNCAO_NATURAL.getOperador());
+			v = new JuncaoTeta(Operadores.JUNCAO_TETA.getOperador());
 			this.exigeParametro = true;
 			break;
 		}

@@ -418,11 +418,11 @@ public class Interface extends javax.swing.JFrame {
         
         btJuncaoTeta.setBackground(new java.awt.Color(255, 255, 255));
         btJuncaoTeta.setFont(new java.awt.Font("Tahoma", 1, 11));
-        btJuncaoTeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
-        btJuncaoTeta.setToolTipText("Operacao Junção Natura");
+        btJuncaoTeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoTeta.png"))); // NOI18N
+        btJuncaoTeta.setToolTipText("Operacao Junção Teta");
         btJuncaoTeta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-            	btJuncaoNaturalMousePressed(evt);
+            	btJuncaoTetaMousePressed(evt);
             }
         });
         
@@ -664,7 +664,7 @@ public class Interface extends javax.swing.JFrame {
 		this.painelGrafico.setNovoOperador(8);
 	}
 
-	private void btJuncaoNaturalMousePressed(java.awt.event.MouseEvent evt) {
+	private void btJuncaoTetaMousePressed(java.awt.event.MouseEvent evt) {
 		this.painelGrafico.setNovoOperador(9);
 	}
 
