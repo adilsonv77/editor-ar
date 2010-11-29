@@ -3,6 +3,7 @@ package org.furb.arbuilder.elementos;
 /**
  * 
  * @author Luciana Pereira de Araújo
+ * 2010
  */
 
 public class Distinct extends Operador {
