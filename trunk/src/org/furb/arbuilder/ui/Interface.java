@@ -170,7 +170,7 @@ public class Interface extends javax.swing.JFrame {
         brJuncaoExterna = new javax.swing.JButton();
         btOrdenacao = new javax.swing.JButton();
         btDistinct = new javax.swing.JButton();
-        btJuncaoNatural = new javax.swing.JButton();
+        btJuncaoTeta = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btAbrir = new javax.swing.JMenuItem();
@@ -416,11 +416,11 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         
-        btJuncaoNatural.setBackground(new java.awt.Color(255, 255, 255));
-        btJuncaoNatural.setFont(new java.awt.Font("Tahoma", 1, 11));
-        btJuncaoNatural.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
-        btJuncaoNatural.setToolTipText("Operacao Junção Natura");
-        btJuncaoNatural.addMouseListener(new java.awt.event.MouseAdapter() {
+        btJuncaoTeta.setBackground(new java.awt.Color(255, 255, 255));
+        btJuncaoTeta.setFont(new java.awt.Font("Tahoma", 1, 11));
+        btJuncaoTeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
+        btJuncaoTeta.setToolTipText("Operacao Junção Natura");
+        btJuncaoTeta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
             	btJuncaoNaturalMousePressed(evt);
             }
@@ -466,7 +466,7 @@ public class Interface extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btAgrupamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btJuncaoNatural, 0, 0, Short.MAX_VALUE)))
+                        .addComponent(btJuncaoTeta, 0, 0, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,7 +511,7 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4))
-                 .addComponent(btJuncaoNatural, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                 .addComponent(btJuncaoTeta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomeOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -923,7 +923,7 @@ public class Interface extends javax.swing.JFrame {
 	private javax.swing.JButton btDesconectar;
 	private javax.swing.JButton btDiferenca;
 	private javax.swing.JButton btDistinct;
-	private javax.swing.JButton btJuncaoNatural;
+	private javax.swing.JButton btJuncaoTeta;
 	private javax.swing.JMenuItem btEquipe;
 	private javax.swing.JButton btExecutarSQL;
 	private javax.swing.JButton btOrdenacao;
