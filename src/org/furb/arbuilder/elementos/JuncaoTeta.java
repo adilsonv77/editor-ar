@@ -2,7 +2,8 @@ package org.furb.arbuilder.elementos;
 
 /**
  * 
- * @author Jonathan Hess, AndrÃ© R. Sousa
+ * @author Luciana Pereira de Araújo
+ * 2010
  */
 
 public class JuncaoTeta extends Operador {
