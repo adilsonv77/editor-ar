@@ -479,7 +479,7 @@ public class Digrafo {
 
 	}
 
-	public final String logicJuncaoNatural(Vertice v, Vertice parent)
+	public final String logicJuncaoTeta(Vertice v, Vertice parent)
 			throws Exception {
 
 		JuncaoTeta jn = (JuncaoTeta) v;
@@ -496,7 +496,7 @@ public class Digrafo {
 		Tabela t2 = AliasHelper.getInstance().getLast();
 
 		AliasHelper.getInstance().setCurrentOperator(
-				Operadores.JUNCAO_NATURAL.getOperador());
+				Operadores.JUNCAO_TETA.getOperador());
 
 		// Recupera as colunas
 		Tabela nT1 = AliasHelper.getInstance().getNewTableFrom(t1);
