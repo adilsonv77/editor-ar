@@ -537,9 +537,6 @@ public class Digrafo {
 		AliasHelper.getInstance().put(nT3);
 		StringBuilder query = new StringBuilder();
 		
-		System.out.println(nT3.getParameters());
-		System.out.println(nT2.getParameters());
-		System.out.println(nT1.getParameters());
 		
 		query.append("SELECT ");
 		query.append(nT3.getParameters());

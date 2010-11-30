@@ -3,7 +3,7 @@ package org.furb.arbuilder.elementos;
 public class Ordenacao extends Operador {
 
     private String parametro;
-    private String entrada;
+    //private String entrada;
 	
 	public Ordenacao(String nome) {
 		super(nome);
@@ -22,13 +22,13 @@ public class Ordenacao extends Operador {
 		this.parametro = parametro;
 	}
 
-	public final String getEntrada() {
+	/*public final String getEntrada() {
 		return entrada;
 	}
 
     public final void setEntrada(Vertice v) {
         entrada = v.toString();
-    }
+    }*/
 	
     @Override
     public final String toString() {

@@ -9,7 +9,7 @@ package org.furb.arbuilder.elementos;
 public class JuncaoTeta extends Operador {
 
     private String parametro;
-    private String entrada;
+//    private String entrada;
 
     public JuncaoTeta(String nome) {
         super(nome);
@@ -20,14 +20,14 @@ public class JuncaoTeta extends Operador {
         this.parametro = parametro;
     }
 
-    public final void setEntrada(Vertice v) {
+  /*  public final void setEntrada(Vertice v) {
         entrada = v.toString();
     }
 
 	public final String getEntrada() {
 		return entrada;
 	}
-
+*/
 	public final void setParametro(String parametro) {
         this.parametro = parametro;
     }
