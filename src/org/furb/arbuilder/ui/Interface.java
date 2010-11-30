@@ -168,6 +168,7 @@ public class Interface extends javax.swing.JFrame {
         parm2Operador = new javax.swing.JTextField();
         btDiferenca = new javax.swing.JButton();
         brJuncaoExterna = new javax.swing.JButton();
+        btInterseccao = new javax.swing.JButton();
         btOrdenacao = new javax.swing.JButton();
         btDistinct = new javax.swing.JButton();
         btJuncaoTeta = new javax.swing.JButton();
@@ -186,7 +187,7 @@ public class Interface extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projeto Algebra Relacional - Banco de Dados II");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setResizable(false);
+        setResizable(true);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SQL resultante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 10))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Tahoma", 0, 10));
@@ -437,6 +438,16 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         
+        btInterseccao.setBackground(new java.awt.Color(255, 255, 255));
+        btInterseccao.setFont(new java.awt.Font("Tahoma", 1, 11));
+        btInterseccao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
+        btInterseccao.setToolTipText("Operacao Intersecção");
+        btInterseccao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+            //	btInterseccaoMousePressed(evt);
+            }
+        });
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -477,7 +488,13 @@ public class Interface extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btAgrupamento, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btJuncaoTeta, 0, 0, Short.MAX_VALUE)))
+                        .addComponent(btJuncaoTeta, 0, 0, Short.MAX_VALUE))
+                        
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                       .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btJuncaoNatural, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        /*.addComponent(btInterseccao, 0, 0, Short.MAX_VALUE)*/))
+                        
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,15 +531,18 @@ public class Interface extends javax.swing.JFrame {
                         .addComponent(btDiferenca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
                         .addComponent(brJuncaoExterna, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE))
                     .addComponent(btOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btDistinct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  //  .addComponent(btJuncaoNatural, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btDistinct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(btJuncaoNatural, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  /*.addComponent(btInterseccao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)*/)
+                  
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btCriarLigacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4))
-                 .addComponent(btJuncaoTeta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                 .addComponent(btJuncaoTeta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                 .addComponent(btJuncaoNatural, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomeOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -940,6 +960,7 @@ public class Interface extends javax.swing.JFrame {
 	private javax.swing.JButton btDistinct;
 	private javax.swing.JButton btJuncaoTeta;
 	private javax.swing.JButton btJuncaoNatural;
+	private javax.swing.JButton btInterseccao;
 	private javax.swing.JMenuItem btEquipe;
 	private javax.swing.JButton btExecutarSQL;
 	private javax.swing.JButton btOrdenacao;
