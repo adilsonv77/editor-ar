@@ -362,15 +362,15 @@ public class PainelGrafico {
 				&& this.operador.getOperador().getClass() == JuncaoTeta.class) {
 			((JuncaoTeta) this.operador.getOperador())
 					.setParametro(args);
-			((JuncaoTeta) this.operador.getOperador())
-					.setEntrada(new Vertice(""));
+			/*((JuncaoTeta) this.operador.getOperador())
+					.setEntrada(new Vertice(""));*/
 		}
 
 		if (args != null
 				&& (this.operador.getOperador().getClass() == Ordenacao.class)) {
 			((Ordenacao) this.operador.getOperador()).setParametro(args);
-			((Ordenacao) this.operador.getOperador())
-					.setEntrada(new Vertice(""));
+			/*((Ordenacao) this.operador.getOperador())
+					.setEntrada(new Vertice(""));*/
 		}
 
 		if (this.operador.getOperador().getClass() == Agrupamento.class) {
