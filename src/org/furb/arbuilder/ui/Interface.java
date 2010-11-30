@@ -171,6 +171,7 @@ public class Interface extends javax.swing.JFrame {
         btOrdenacao = new javax.swing.JButton();
         btDistinct = new javax.swing.JButton();
         btJuncaoTeta = new javax.swing.JButton();
+        btJuncaoNatural = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btAbrir = new javax.swing.JMenuItem();
@@ -426,6 +427,16 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         
+        btJuncaoNatural.setBackground(new java.awt.Color(255, 255, 255));
+        btJuncaoNatural.setFont(new java.awt.Font("Tahoma", 1, 11));
+        btJuncaoNatural.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
+        btJuncaoNatural.setToolTipText("Operacao Junção Natural");
+        btJuncaoNatural.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+            	btJuncaoNaturalMousePressed(evt);
+            }
+        });
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -666,6 +677,10 @@ public class Interface extends javax.swing.JFrame {
 
 	private void btJuncaoTetaMousePressed(java.awt.event.MouseEvent evt) {
 		this.painelGrafico.setNovoOperador(9);
+	}
+	
+	private void btJuncaoNaturalMousePressed(java.awt.event.MouseEvent evt) {
+		this.painelGrafico.setNovoOperador(10);
 	}
 
 	private void btConfiguracaoBDMousePressed(java.awt.event.MouseEvent evt) {
@@ -924,6 +939,7 @@ public class Interface extends javax.swing.JFrame {
 	private javax.swing.JButton btDiferenca;
 	private javax.swing.JButton btDistinct;
 	private javax.swing.JButton btJuncaoTeta;
+	private javax.swing.JButton btJuncaoNatural;
 	private javax.swing.JMenuItem btEquipe;
 	private javax.swing.JButton btExecutarSQL;
 	private javax.swing.JButton btOrdenacao;
