@@ -221,7 +221,6 @@ public class Digrafo {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			AliasHelper.getInstance().clearAlias();
 		}
 
@@ -271,7 +270,7 @@ public class Digrafo {
 		String params = ps.getParametro();
 		boolean useHaving = false;
 
-		if (params.indexOf("(") != -1 && params.indexOf("\\)") != 1) {
+		if (params.indexOf("(") != -1 && params.indexOf(")") != 1) {
 			useHaving = true;
 		}
 
@@ -290,18 +289,24 @@ public class Digrafo {
 
 		operParams = params; // operParams.replaceAll( operParams , params );
 
-		if (op.equals(Operadores.PROJECAO.getOperador())) {
-			String[] split = parentLeft.split("(");
+		//TODO ticket 5
+		
+		/*if (op.equals(Operadores.PROJECAO.getOperador())) {
+			String[] split = parentLeft.split("\\(");
 			split[0].replace("FROM", "");
 			split[0].replace("SELECT", "");
 			split = split[0].split(",");
 			String s = "SELECT * FROM (";
 			for (int i = 0; i < split.length; i++) {
-				 s += split[i];
+				if (i == split.length-1)
+					s += split[i] + " ";
+				else
+					s += split[i] + ", ";
 			}
-			s += ")";
-			System.out.println(s);
-		}
+			
+			s += t1.getNome() + " )";
+			parentLeft = s;
+		}*/
 		
 		// Adiciona restricao no select
 		if (op.equals(Operadores.SELECAO.getOperador())) { // Aninhamento de
