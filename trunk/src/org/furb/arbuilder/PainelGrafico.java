@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import org.furb.arbuilder.elementos.Agrupamento;
 import org.furb.arbuilder.elementos.Diferenca;
 import org.furb.arbuilder.elementos.Distinct;
+import org.furb.arbuilder.elementos.Interseccao;
 import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
 import org.furb.arbuilder.elementos.JuncaoNatural;
 import org.furb.arbuilder.elementos.JuncaoTeta;
@@ -258,6 +259,12 @@ public class PainelGrafico {
 			this.limparAtributo();
 			return;
 		}
+		if (primeiraCelula.getUserObject().getClass() == Interseccao.class
+				&& this.controle.getEstruturaDigrafo().getAdjacencias(
+						(Vertice) primeiraCelula.getUserObject()).size() > 1) {
+			this.limparAtributo();
+			return;
+		}
 
 		ligacao.setSource(this.primeiraCelula.getChildAt(0));
 		ligacao.setTarget(segundaCelula.getChildAt(0));
@@ -397,6 +404,13 @@ public class PainelGrafico {
 						.setColunasProjetadas(a2);
 			}
 		}
+		
+		if (args != null
+				&& this.operador.getOperador().getClass() == Interseccao.class) {
+			((Interseccao) this.operador.getOperador())
+					.setParametro(args);
+		}
+
 
 		Vertice v = buildVertice(args, a1, a2);
 		// Cria nova celula grafica que representa um operador
@@ -474,6 +488,9 @@ public class PainelGrafico {
 		}
 		if (this.operador.getOperador() instanceof JuncaoNatural) {
 			v = new JuncaoNatural(this.operador.getOperador().getNome());
+		}
+		if (this.operador.getOperador().getClass() == Interseccao.class) {
+			v = new Interseccao(this.operador.getOperador().getNome()); //TODO
 		}
 
 		return v;
@@ -611,8 +628,12 @@ public class PainelGrafico {
 								((JuncaoNatural) celula).getNome(),
 								((JuncaoNatural) celula).getParametro(), "",
 								false);
-					}else {
-						((Interface) this.parent)
+					}else if (celula.getClass() == Interseccao.class) {
+						((Interface) this.parent).setEditarParametrosOperador(
+								((Interseccao) celula).getNome(),
+								((Interseccao) celula).getParametro(), "",
+								false);
+					} else { ((Interface) this.parent)
 								.setEditarParametrosTabela(((Operador) celula)
 										.getNome());
 					}
@@ -718,6 +739,10 @@ public class PainelGrafico {
 			break;
 		case 10:
 			v = new JuncaoNatural(Operadores.JUNCAO_NATURAL.getOperador());
+			this.exigeParametro = false;
+			break;
+		case 11:
+			v = new Interseccao(Operadores.INTERSECCAO.getOperador());
 			this.exigeParametro = false;
 			break;
 		}

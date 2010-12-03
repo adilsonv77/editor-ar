@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.furb.arbuilder.elementos.Agrupamento;
+import org.furb.arbuilder.elementos.Interseccao;
 import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
-import org.furb.arbuilder.elementos.JuncaoNatural;
 import org.furb.arbuilder.elementos.JuncaoTeta;
 import org.furb.arbuilder.elementos.Ordenacao;
 import org.furb.arbuilder.elementos.Projecao;
@@ -221,6 +221,7 @@ public class Digrafo {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			AliasHelper.getInstance().clearAlias();
 		}
 
@@ -270,7 +271,7 @@ public class Digrafo {
 		String params = ps.getParametro();
 		boolean useHaving = false;
 
-		if (params.indexOf("(") != -1 && params.indexOf(")") != 1) {
+		if (params.indexOf("(") != -1 && params.indexOf("\\)") != 1) {
 			useHaving = true;
 		}
 
@@ -289,6 +290,19 @@ public class Digrafo {
 
 		operParams = params; // operParams.replaceAll( operParams , params );
 
+		if (op.equals(Operadores.PROJECAO.getOperador())) {
+			String[] split = parentLeft.split("(");
+			split[0].replace("FROM", "");
+			split[0].replace("SELECT", "");
+			split = split[0].split(",");
+			String s = "SELECT * FROM (";
+			for (int i = 0; i < split.length; i++) {
+				 s += split[i];
+			}
+			s += ")";
+			System.out.println(s);
+		}
+		
 		// Adiciona restricao no select
 		if (op.equals(Operadores.SELECAO.getOperador())) { // Aninhamento de
 			// restricoes
@@ -646,6 +660,90 @@ public class Digrafo {
 		System.out.println(query.toString());
 		return query.toString();
 
+	}
+
+	public final String logicInterseccao(Vertice v, Vertice parent)
+			throws Exception {
+
+		Interseccao jt = (Interseccao) v; //TODO
+
+		// Recursivamente chama os operadores superiores, motando suas querys.
+		String parentLeft = montaAlgebraRelacional(getAdjacencias(v).get(0), v)
+				.trim();
+		this.validaQuery(parentLeft);
+		Tabela t1 = AliasHelper.getInstance().getLast();
+
+		String parentRight = montaAlgebraRelacional(getAdjacencias(v).get(1), v)
+				.trim();
+		this.validaQuery(parentRight);
+		Tabela t2 = AliasHelper.getInstance().getLast();
+
+		AliasHelper.getInstance().setCurrentOperator(
+				Operadores.INTERSECCAO.getOperador());
+
+		// Recupera as colunas
+		Tabela nT1 = AliasHelper.getInstance().getNewTableFrom(t1);
+		Tabela nT2 = AliasHelper.getInstance().getNewTableFrom(t2);
+		nT1.setAutoExclude(true);
+		nT2.setAutoExclude(true);
+
+		// Checa compatibilidade de colunas
+		AliasHelper.getInstance().put(nT1);
+		AliasHelper.getInstance().put(nT2);
+		AliasHelper.getInstance().checkAlias(nT1, nT2);
+
+		String onParams = jt.getParametro();
+		// Colocar alias para as colunas
+		for (Coluna c2 : nT1.getColunas()) {
+			String fullColumn = String.valueOf(c2.getNmTabela() + "."
+					+ c2.getNmRealColuna());
+			if (onParams.indexOf(fullColumn) != -1) {
+				String newFullColumn = String.valueOf(c2.getUniqueTable() + "."
+						+ c2.getNmColuna());
+				onParams = onParams.replaceAll(fullColumn, newFullColumn);
+			}
+		}
+
+		for (Coluna c1 : nT2.getColunas()) {
+			String fullColumn = String.valueOf(c1.getNmTabela() + "."
+					+ c1.getNmRealColuna());
+
+			if (onParams.indexOf(fullColumn) != -1) {
+				String newFullColumn = String.valueOf(c1.getUniqueTable() + "."
+						+ c1.getNmColuna());
+				onParams = onParams.replaceAll(fullColumn, newFullColumn);
+
+			}
+		}
+		Tabela nT3 = AliasHelper.getInstance().getNewTableFromGroup(nT1, nT2);
+
+		AliasHelper.getInstance().put(nT3);
+		StringBuilder query = new StringBuilder();
+
+		query.append("SELECT ");
+		query.append(nT3.getParameters());
+		query.append(" FROM ( ");
+
+		query.append("SELECT ");
+		query.append(nT1.getParameters());
+		query.append(", ");
+		query.append(nT2.getParameters());
+		query.append(" FROM ( ");
+		query.append(parentLeft);
+		query.append(") AS ");
+		query.append(nT1.getUniqueId());
+		query.append(" JOIN ( ");
+		query.append(parentRight);
+		query.append(") AS ");
+		query.append(nT2.getUniqueId());
+		query.append(" ON ( ");
+		query.append(onParams);
+		query.append(" ) ");
+
+		query.append(" ) ");
+		query.append(nT3.getUniqueId());
+
+		return query.toString();
 	}
 
 	/**
