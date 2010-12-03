@@ -444,7 +444,7 @@ public class Interface extends javax.swing.JFrame {
         btInterseccao.setToolTipText("Operacao Intersecção");
         btInterseccao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-            //	btInterseccaoMousePressed(evt);
+            	btInterseccaoMousePressed(evt);
             }
         });
         
@@ -659,6 +659,10 @@ public class Interface extends javax.swing.JFrame {
 		}
 	}// GEN-LAST:event_btSairMousePressed
 
+	private void btInterseccaoMousePressed(java.awt.event.MouseEvent evt) {
+		this.painelGrafico.setNovoOperador(11);
+	}
+	
 	private void btSelecaoMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btSelecaoMousePressed
 		this.painelGrafico.setNovoOperador(0);
 	}// GEN-LAST:event_btSelecaoMousePressed

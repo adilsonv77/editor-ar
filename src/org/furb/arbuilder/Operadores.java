@@ -12,7 +12,8 @@ public enum Operadores {
 	JUNCAO_EX_ESQUERDA("JuncaoExEsquerda", 7,"/org/furb/arbuilder/resources/images/op_juncao.png"), 
 	DISTINCT("Distinct", 8,"/org/furb/arbuilder/resources/images/op_distinct.png"),
 	JUNCAO_TETA("JuncaoTeta", 9,"/org/furb/arbuilder/resources/images/op_juncaoTeta.png"), 
-	JUNCAO_NATURAL("JuncaoNatural", 10,"/org/furb/arbuilder/resources/images/op_juncaoNatural.png");
+	JUNCAO_NATURAL("JuncaoNatural", 10,"/org/furb/arbuilder/resources/images/op_juncaoNatural.png"),
+	INTERSECCAO("Interseccao", 11,"/org/furb/arbuilder/resources/images/op_interseccao.PNG");
 
 	private String operador;
 	private int type;
