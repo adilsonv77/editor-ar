@@ -567,7 +567,7 @@ public class Digrafo {
 	public final String logicJuncaoNatural(Vertice v, Vertice parent)
 			throws Exception {
 
-		JuncaoNatural jn = (JuncaoNatural) v;
+		// JuncaoNatural jn = (JuncaoNatural) v;
 
 		// Recursivamente chama os operadores superiores, motando suas querys.
 		String parentLeft = montaAlgebraRelacional(getAdjacencias(v).get(0), v)
@@ -594,55 +594,54 @@ public class Digrafo {
 		AliasHelper.getInstance().put(nT2);
 		AliasHelper.getInstance().checkAlias(nT1, nT2);
 
-		
-		String onParams = jn.getParametro();
-		// Colocar alias para as colunas
-		for (Coluna c2 : nT1.getColunas()) {
-			String fullColumn = String.valueOf(c2.getNmTabela() + "."
-					+ c2.getNmRealColuna());
-			if (onParams.indexOf(fullColumn) != -1) {
-				String newFullColumn = String.valueOf(c2.getUniqueTable() + "."
-						+ c2.getNmColuna());
-				onParams = onParams.replaceAll(fullColumn, newFullColumn);
-			}
-		}
-
-		for (Coluna c1 : nT2.getColunas()) {
-			String fullColumn = String.valueOf(c1.getNmTabela() + "."
-					+ c1.getNmRealColuna());
-
-			if (onParams.indexOf(fullColumn) != -1) {
-				String newFullColumn = String.valueOf(c1.getUniqueTable() + "."
-						+ c1.getNmColuna());
-				onParams = onParams.replaceAll(fullColumn, newFullColumn);
-
-			}
-		}
+		/*
+		 * String onParams = jn.getParametro(); // Colocar alias para as colunas
+		 * for (Coluna c2 : nT1.getColunas()) { String fullColumn =
+		 * String.valueOf(c2.getNmTabela() + "." + c2.getNmRealColuna()); if
+		 * (onParams.indexOf(fullColumn) != -1) { String newFullColumn =
+		 * String.valueOf(c2.getUniqueTable() + "." + c2.getNmColuna());
+		 * onParams = onParams.replaceAll(fullColumn, newFullColumn); } }
+		 * 
+		 * for (Coluna c1 : nT2.getColunas()) { String fullColumn =
+		 * String.valueOf(c1.getNmTabela() + "." + c1.getNmRealColuna());
+		 * 
+		 * if (onParams.indexOf(fullColumn) != -1) { String newFullColumn =
+		 * String.valueOf(c1.getUniqueTable() + "." + c1.getNmColuna());
+		 * onParams = onParams.replaceAll(fullColumn, newFullColumn);
+		 * 
+		 * } }
+		 */
 		Tabela nT3 = AliasHelper.getInstance().getNewTableFromGroup(nT1, nT2);
 
 		AliasHelper.getInstance().put(nT3);
 		StringBuilder query = new StringBuilder();
 
-		query.append("SELECT ");
-		query.append(nT3.getParameters());
-		query.append(" FROM ( ");
+		List<Coluna> listaTemp = nT2.getColunas();
+		for (Coluna c1 : nT1.getColunas()) {
+			for (Coluna c2 : listaTemp) {
+				if (c1.getNmColuna().equals(c2.getNmColuna())) {
+					nT2.getColunas().remove(c2);
+				}
+			}
+		}
 
 		query.append("SELECT ");
-		query.append(nT1.getParameters());
-		query.append(", ");
-		query.append(nT2.getParameters());
-		query.append(" FROM ( ");
-		query.append(parentLeft);
-		query.append(") AS ");
+		for (Coluna c : nT1.getColunas()) {
+			query.append(nT1.getUniqueId() + "." + c.getNmColuna() + ", ");
+		}
+		for (Coluna c : nT2.getColunas()) {
+			query.append(nT2.getUniqueId() + "." + c.getNmColuna() + ", ");
+		}
+		query.deleteCharAt(query.lastIndexOf(", "));
+
+		query.append(" FROM ");
+		query.append(nT1.getNome());
+		query.append(" AS ");
 		query.append(nT1.getUniqueId());
-		query.append(" NATURAL JOIN ( ");
-		query.append(parentRight);
-		query.append(") AS ");
+		query.append(" NATURAL JOIN  ");
+		query.append(nT2.getNome());
+		query.append(" AS ");
 		query.append(nT2.getUniqueId());
-		
-
-		query.append(" ) ");
-		query.append(nT3.getUniqueId());
 
 		System.out.println(query.toString());
 		return query.toString();
