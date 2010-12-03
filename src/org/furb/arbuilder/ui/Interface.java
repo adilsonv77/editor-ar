@@ -440,7 +440,7 @@ public class Interface extends javax.swing.JFrame {
         
         btInterseccao.setBackground(new java.awt.Color(255, 255, 255));
         btInterseccao.setFont(new java.awt.Font("Tahoma", 1, 11));
-        btInterseccao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_juncaoNatural.png"))); // NOI18N
+        btInterseccao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/furb/arbuilder/resources/images/op_interseccao.PNG"))); // NOI18N
         btInterseccao.setToolTipText("Operacao Intersecção");
         btInterseccao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
