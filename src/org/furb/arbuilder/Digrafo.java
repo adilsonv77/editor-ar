@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.furb.arbuilder.elementos.Agrupamento;
-import org.furb.arbuilder.elementos.Interseccao;
 import org.furb.arbuilder.elementos.JuncaoExternaEsquerda;
 import org.furb.arbuilder.elementos.JuncaoTeta;
 import org.furb.arbuilder.elementos.Ordenacao;
@@ -289,25 +288,18 @@ public class Digrafo {
 
 		operParams = params; // operParams.replaceAll( operParams , params );
 
-		//TODO ticket 5
-		
-		/*if (op.equals(Operadores.PROJECAO.getOperador())) {
-			String[] split = parentLeft.split("\\(");
-			split[0].replace("FROM", "");
-			split[0].replace("SELECT", "");
-			split = split[0].split(",");
-			String s = "SELECT * FROM (";
-			for (int i = 0; i < split.length; i++) {
-				if (i == split.length-1)
-					s += split[i] + " ";
-				else
-					s += split[i] + ", ";
-			}
-			
-			s += t1.getNome() + " )";
-			parentLeft = s;
-		}*/
-		
+		// TODO ticket 5
+
+		/*
+		 * if (op.equals(Operadores.PROJECAO.getOperador())) { String[] split =
+		 * parentLeft.split("\\("); split[0].replace("FROM", "");
+		 * split[0].replace("SELECT", ""); split = split[0].split(","); String s
+		 * = "SELECT * FROM ("; for (int i = 0; i < split.length; i++) { if (i
+		 * == split.length-1) s += split[i] + " "; else s += split[i] + ", "; }
+		 * 
+		 * s += t1.getNome() + " )"; parentLeft = s; }
+		 */
+
 		// Adiciona restricao no select
 		if (op.equals(Operadores.SELECAO.getOperador())) { // Aninhamento de
 			// restricoes
@@ -670,85 +662,74 @@ public class Digrafo {
 	public final String logicInterseccao(Vertice v, Vertice parent)
 			throws Exception {
 
-		Interseccao jt = (Interseccao) v; //TODO
-
-		// Recursivamente chama os operadores superiores, motando suas querys.
 		String parentLeft = montaAlgebraRelacional(getAdjacencias(v).get(0), v)
 				.trim();
-		this.validaQuery(parentLeft);
 		Tabela t1 = AliasHelper.getInstance().getLast();
+		this.validaQuery(parentLeft);
 
 		String parentRight = montaAlgebraRelacional(getAdjacencias(v).get(1), v)
 				.trim();
-		this.validaQuery(parentRight);
 		Tabela t2 = AliasHelper.getInstance().getLast();
+		this.validaQuery(parentRight);
+
+		// Valida numero de colunas
+		if (t1.getColunas().size() != t2.getColunas().size()) {
+			throw new Exception("Incompatibilidade de colunas (tamanho!)");
+		}
+
+		// Valida tipo das colunas
+		for (int i = 0; i < t1.getColunas().size(); i++) {
+			if (!t1.getColunas().get(i).getTpColuna().equals(
+					t2.getColunas().get(i).getTpColuna())) {
+				throw new Exception("Incompatibilidade de colunas (tipo!)");
+			}
+		}
 
 		AliasHelper.getInstance().setCurrentOperator(
 				Operadores.INTERSECCAO.getOperador());
 
-		// Recupera as colunas
 		Tabela nT1 = AliasHelper.getInstance().getNewTableFrom(t1);
-		Tabela nT2 = AliasHelper.getInstance().getNewTableFrom(t2);
-		nT1.setAutoExclude(true);
-		nT2.setAutoExclude(true);
-
-		// Checa compatibilidade de colunas
 		AliasHelper.getInstance().put(nT1);
-		AliasHelper.getInstance().put(nT2);
-		AliasHelper.getInstance().checkAlias(nT1, nT2);
+		Tabela nT2 = AliasHelper.getInstance().getNewTableFrom(t2);
 
-		String onParams = jt.getParametro();
-		// Colocar alias para as colunas
-		for (Coluna c2 : nT1.getColunas()) {
-			String fullColumn = String.valueOf(c2.getNmTabela() + "."
-					+ c2.getNmRealColuna());
-			if (onParams.indexOf(fullColumn) != -1) {
-				String newFullColumn = String.valueOf(c2.getUniqueTable() + "."
-						+ c2.getNmColuna());
-				onParams = onParams.replaceAll(fullColumn, newFullColumn);
-			}
-		}
-
-		for (Coluna c1 : nT2.getColunas()) {
-			String fullColumn = String.valueOf(c1.getNmTabela() + "."
-					+ c1.getNmRealColuna());
-
-			if (onParams.indexOf(fullColumn) != -1) {
-				String newFullColumn = String.valueOf(c1.getUniqueTable() + "."
-						+ c1.getNmColuna());
-				onParams = onParams.replaceAll(fullColumn, newFullColumn);
-
-			}
-		}
-		Tabela nT3 = AliasHelper.getInstance().getNewTableFromGroup(nT1, nT2);
-
-		AliasHelper.getInstance().put(nT3);
+		// query alternativa ao INTERSECT (Oracle):
+		// SELECT a.idvendedor, a.dsvendedor
+		// FROM vendedores a INNER JOIN clientes b
+		// ON a.idvendedor=b.idcliente AND a.dsvendedor=b.dscliente
 		StringBuilder query = new StringBuilder();
-
-		query.append("SELECT ");
-		query.append(nT3.getParameters());
-		query.append(" FROM ( ");
-
 		query.append("SELECT ");
 		query.append(nT1.getParameters());
-		query.append(", ");
-		query.append(nT2.getParameters());
 		query.append(" FROM ( ");
-		query.append(parentLeft);
-		query.append(") AS ");
+		query.append(makeQuerySafe(parentLeft).trim());
+		query.append(" ");
+		query.append(v.toString().replace("Interseccao", "INNER JOIN").trim());
+		query.append(" ");
+		query.append(nT2.getNome());
+		query.append(" ");
+		query.append(t2.getUniqueId());
+		query.append(" ON ");
+		query.append(t1.getUniqueId());
+		query.append(".");
+		query.append(t1.getColunas().get(0).getNmColuna());
+		query.append("=");
+		query.append(t2.getUniqueId());
+		query.append(".");
+		query.append(t2.getColunas().get(0).getNmColuna());		
+		for (int i = 1; i < t1.getColunas().size(); i++) {
+			query.append(" AND ");
+			query.append(t1.getUniqueId());
+			query.append(".");
+			query.append(t1.getColunas().get(i).getNmColuna());
+			query.append("=");
+			query.append(t2.getUniqueId());
+			query.append(".");
+			query.append(t2.getColunas().get(i).getNmColuna());
+		}
+		query.append(" ) ");
 		query.append(nT1.getUniqueId());
-		query.append(" JOIN ( ");
-		query.append(parentRight);
-		query.append(") AS ");
-		query.append(nT2.getUniqueId());
-		query.append(" ON ( ");
-		query.append(onParams);
-		query.append(" ) ");
+		
+		return makeQuerySafe(query.toString());
 
-		query.append(" ) ");
-		query.append(nT3.getUniqueId());
-
-		return query.toString();
 	}
 
 	/**
