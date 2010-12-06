@@ -366,9 +366,10 @@ public class Digrafo {
 			throws Exception {
 		Projecao ps = (Projecao) v;
 
-		if (ps.getParametro().trim().contains("*")) {
-			throw new Exception();
-		}
+		/*
+		 * if (ps.getParametro().trim().contains("*")) { throw new Exception();
+		 * }
+		 */
 
 		// Recursivamente chama os operadores superiores, motando suas querys.
 		String parentLeft = montaAlgebraRelacional(getAdjacencias(v).get(0), v);
@@ -380,10 +381,12 @@ public class Digrafo {
 
 		Tabela nT1 = new Tabela(t1.getNome());
 		StringTokenizer st = new StringTokenizer(ps.getParametro(), ",");
+		String param = "";
+		String coluna = "";
+		boolean flag = false;
 		while (st.hasMoreTokens()) {
-			String param = st.nextToken().trim();
+			param = st.nextToken().trim();
 			boolean find = false;
-
 			// Tem alias
 			if (param.indexOf(".") != -1) {
 				for (Coluna nT1c : t1.getColunas()) {
@@ -408,6 +411,8 @@ public class Digrafo {
 			} else {
 				Coluna c = null;
 				for (Coluna cols : t1.getColunas()) {
+					// Só entra se a coluna for igual ao parâmetro, no caso,
+					// quando é conta não entra...
 					if (cols.getNmRealColuna().equals(param)) {
 						c = cols.clone();
 						if (!c.getAliasColuna().trim().isEmpty()) {
@@ -416,6 +421,59 @@ public class Digrafo {
 									+ cols.getAliasColuna());
 						}
 						c.setUniqueTable(String.valueOf(nT1.getUniqueId()));
+						find = true;
+					} else if (param.indexOf('-') > 0 || param.indexOf('+') > 0
+							|| param.indexOf('*') > 0 || param.indexOf('/') > 0) {
+						c = cols.clone();
+						String p = param;
+
+						String aux = "";
+						String aux2 = "";
+
+						if (p.indexOf('-') > 0) {
+							if (p.indexOf("(") >= 0) {
+								aux = p.substring(1, p.indexOf('-'));
+							} else {
+								aux = p.substring(0, p.indexOf('-'));
+							}
+
+							aux2 = p.substring(p.indexOf('-') + 1, p.length());
+							p = "(R2." + aux + "-" + "R2." + aux2;
+						}
+						if (p.indexOf('+') > 0) {
+							if (p.indexOf("(") >= 0) {
+								aux = p.substring(1, p.indexOf('+'));
+							} else {
+								aux = p.substring(0, p.indexOf('+'));
+							}
+							aux2 = p.substring(p.indexOf('+') + 1, p.length());
+							p = "(R2." + aux + "+" + "R2." + aux2;
+						}
+						if (p.indexOf('*') > 0) {
+							if (p.indexOf("(") >= 0) {
+								aux = p.substring(1, p.indexOf('*'));
+							} else {
+								aux = p.substring(0, p.indexOf('*'));
+							}
+							aux2 = p.substring(p.indexOf('*') + 1, p.length());
+							p = "(R2." + aux + "*" + "R2." + aux2;
+						}
+						if (p.indexOf('/') > 0) {
+							if (p.indexOf("(") >= 0) {
+								aux = p.substring(1, p.indexOf('/'));
+							} else {
+								aux = p.substring(0, p.indexOf('/'));
+							}
+							aux2 = p.substring(p.indexOf('/') + 1, p.length());
+							p = "(R2." + aux + "/" + "R2." + aux2;
+						}
+
+						if (p.indexOf(')') <= 0) {
+							p += ")";
+						}
+
+						c.setNmColuna(p);
+						flag = true;
 						find = true;
 					}
 					if (find) {
@@ -431,9 +489,39 @@ public class Digrafo {
 		}
 
 		AliasHelper.getInstance().put(nT1);
+		String newQuery = "";
+		String aux = "";
+		if (flag) {
+			String p = nT1.getParameters();
+			if (p.indexOf(',') > 0) {
+				String[] vetor = p.split(",");
+				for (String s : vetor) {
+					if (s.indexOf('-') > 0 || s.indexOf('+') > 0
+							|| s.indexOf('*') > 0 || s.indexOf('/') > 0) {
+						String a = s.substring(s.indexOf('.') + 1, s.length());
+						aux += a + ",";
+					} else {
+						aux += s + ",";
+					}
+				}
+			} else {
+				aux = p.substring(p.indexOf('.') + 1, p.length()) + ",";
+			}
+			aux = aux.substring(0, aux.length() - 1);
+		}
 
-		String newQuery = "SELECT " + nT1.getParameters() + " FROM ( "
-				+ parentLeft + " ) " + nT1.getUniqueId();
+		if (nT1.getParameters() == null) {
+			newQuery = "SELECT " + coluna + " FROM ( " + parentLeft + " ) "
+					+ nT1.getUniqueId();
+		}
+
+		if (flag) {
+			newQuery = "SELECT " + aux + " FROM ( " + parentLeft + " ) "
+					+ nT1.getUniqueId();
+		} else {
+			newQuery = "SELECT " + nT1.getParameters() + " FROM ( "
+					+ parentLeft + " ) " + nT1.getUniqueId();
+		}
 		return makeQuerySafe(newQuery);
 	}
 
@@ -714,7 +802,7 @@ public class Digrafo {
 		query.append("=");
 		query.append(t2.getUniqueId());
 		query.append(".");
-		query.append(t2.getColunas().get(0).getNmColuna());		
+		query.append(t2.getColunas().get(0).getNmColuna());
 		for (int i = 1; i < t1.getColunas().size(); i++) {
 			query.append(" AND ");
 			query.append(t1.getUniqueId());
@@ -727,7 +815,7 @@ public class Digrafo {
 		}
 		query.append(" ) ");
 		query.append(nT1.getUniqueId());
-		
+
 		return makeQuerySafe(query.toString());
 
 	}
