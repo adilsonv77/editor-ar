@@ -715,14 +715,16 @@ public class Digrafo {
 		AliasHelper.getInstance().put(nT3);
 		StringBuilder query = new StringBuilder();
 
-		List<Coluna> listaTemp = nT2.getColunas();
+		List<Coluna> listaTemp = new ArrayList<Coluna>();
 		for (Coluna c1 : nT1.getColunas()) {
-			for (Coluna c2 : listaTemp) {
+			for (Coluna c2 : nT2.getColunas()) {
 				if (c1.getNmColuna().equals(c2.getNmColuna())) {
-					nT2.getColunas().remove(c2);
+					listaTemp.add(c2);
+					// nT2.getColunas().remove(c2);
 				}
 			}
 		}
+		nT2.getColunas().removeAll(listaTemp);
 
 		query.append("SELECT ");
 		for (Coluna c : nT1.getColunas()) {
