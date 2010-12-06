@@ -288,17 +288,6 @@ public class Digrafo {
 
 		operParams = params; // operParams.replaceAll( operParams , params );
 
-		// TODO ticket 5
-
-		/*
-		 * if (op.equals(Operadores.PROJECAO.getOperador())) { String[] split =
-		 * parentLeft.split("\\("); split[0].replace("FROM", "");
-		 * split[0].replace("SELECT", ""); split = split[0].split(","); String s
-		 * = "SELECT * FROM ("; for (int i = 0; i < split.length; i++) { if (i
-		 * == split.length-1) s += split[i] + " "; else s += split[i] + ", "; }
-		 * 
-		 * s += t1.getNome() + " )"; parentLeft = s; }
-		 */
 
 		// Adiciona restricao no select
 		if (op.equals(Operadores.SELECAO.getOperador())) { // Aninhamento de
@@ -326,7 +315,8 @@ public class Digrafo {
 						+ parentLeft.split("ORDER BY")[1];
 			}
 
-			return parentLeft + " WHERE " + operParams;
+			
+			return "SELECT * FROM (" + parentLeft + ") " + t1.getUniqueId() + " WHERE " + operParams;
 		} else { // Nova restricao
 
 			if (parentLeft.contains("GROUP BY")) { // Adiciona antes do group by
@@ -350,7 +340,7 @@ public class Digrafo {
 						+ parentLeft.split("ORDER BY")[1];
 			}
 
-			return parentLeft + " " + "WHERE " + operParams;
+			return "SELECT * FROM (" + parentLeft + ") " + t1.getUniqueId() + " WHERE " + operParams;
 		}
 	}
 
