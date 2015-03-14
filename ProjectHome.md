@@ -1,0 +1,1 @@
+This project is a Relational Algebra (RA) editor where you can make RA Trees and execution some node from this tree. For execution is necessary a MySQL Database connection.
